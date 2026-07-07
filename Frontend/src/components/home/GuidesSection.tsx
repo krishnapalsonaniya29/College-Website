@@ -1,21 +1,22 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-
+import image1 from "../../assets/images/mohan_yadav.webp";
+import image2 from "../../assets/images/inder_parmar.webp";
 const guides = [
   {
     name: "डॉ. मोहन यादव",
     designation: "माननीय मुख्यमंत्री, मध्यप्रदेश शासन",
-    image: "https://i.pravatar.cc/300?img=15",
+    image: image1,
   },
   {
     name: "श्री इंदर सिंह परमार",
     designation: "माननीय उच्च शिक्षा मंत्री, मध्यप्रदेश शासन",
-    image: "https://i.pravatar.cc/300?img=68",
+    image: image2,
   },
   {
     name: "डॉ. अशोक कुमार",
     designation: "माननीय संचालक, उच्च शिक्षा विभाग",
-    image: "https://i.pravatar.cc/300?img=53",
+    image: "",
   },
 ];
 

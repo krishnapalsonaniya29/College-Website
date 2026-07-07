@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-
+import image1 from "../../assets/images/college_logo.jpg";
+import image2 from "../../assets/images/naac_logo.jpg";
 function MainHeader() {
   return (
     <motion.header
@@ -14,7 +15,7 @@ function MainHeader() {
         <div className="group cursor-pointer">
           <div className="overflow-hidden rounded-full border-2 border-transparent transition-all duration-300 group-hover:border-blue-600 group-hover:shadow-lg">
             <img
-              src="/images/logo.png"
+              src={image1}
               alt="Institute Logo"
               className="h-20 w-20 object-cover"
             />
@@ -45,7 +46,7 @@ function MainHeader() {
         <div className="group cursor-pointer">
           <div className="overflow-hidden rounded-full border-2 border-transparent transition-all duration-300 group-hover:border-yellow-500 group-hover:shadow-lg">
             <img
-              src="/images/naac.png"
+              src={image2}
               alt="NAAC Logo"
               className="h-20 w-20 object-cover"
             />
