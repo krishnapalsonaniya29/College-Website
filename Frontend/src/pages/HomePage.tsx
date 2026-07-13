@@ -1,8 +1,8 @@
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-import TopHeader from "@/components/home/TopHeader";
-import MainHeader from "@/components/home/MainHeader";
-import Navbar from "@/components/navbar/Navbar";
+import TopHeader from "@/components/common/TopHeader";
+import MainHeader from "@/components/common/MainHeader";
+import Navbar from "@/components/common/Navbar";
 import LatestNews from "@/components/home/LatestNews";
 import HeroCarousel from "@/components/home/HeroCarousel";
 import LatestUpdates from "@/components/home/LatestUpdates";
@@ -18,7 +18,7 @@ import StudentAchievements from "@/components/home/StudentAchievements";
 import ThoughtOfTheDay from "@/components/home/ThoughtOfTheDay";
 import LatestPhotographs from "@/components/home/LatestPhotographs";
 import AlumniViews from "@/components/home/AlumniViews";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/components/common/Footer";
 export function HomePage() {
   useDocumentTitle("Home");
 
