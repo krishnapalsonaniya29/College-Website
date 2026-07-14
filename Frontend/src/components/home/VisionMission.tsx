@@ -15,14 +15,14 @@ const tabs = [
     title: "Vision",
     icon: Eye,
     content:
-      "To become a nationally recognized institution for academic excellence, quality research, innovation, and holistic student development.",
+      "To develop self-confidence, self-reliance, communication skill, and economic independence among girls. To generate knowledge with essential inputs of resources thereby creating an ambience conducive to academic excellence.",
   },
   {
     id: "mission",
     title: "Mission",
     icon: Target,
     content:
-      "To provide quality education, promote research, encourage entrepreneurship, and develop socially responsible leaders with ethical values.",
+      "The Mission of the college is to provide education at a minimum cost and to transform women power into a human resource through adequate utilization of their learning towards the continuous progress of knowledge-based and welfare-oriented society",
   },
   {
     id: "objective",

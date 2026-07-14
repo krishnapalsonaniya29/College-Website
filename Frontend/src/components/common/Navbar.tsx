@@ -18,32 +18,33 @@ const menuItems = [
     href: "/departments",
   },
   {
-    title: "Courses",
-    href: "#",
+    title: "Programs",
+    href: "/programs",
   },
   {
-    title: "Research",
-    href: "#",
-  },
-  {
-    title: "Syllabus",
-    href: "#",
-  },
-  {
-    title: "Library",
+    title: "Admissions",
     children: [
-      { title: "E-Library", href: "#" },
-      { title: "Library", href: "#" },
-      { title: "DELNET", href: "#" },
+      { title: "Notice", href: "/admissions/notice" },
+      { title: "Fees", href: "/fees" },
+      
     ],
   },
   {
+    title: "Syllabus",
+    href: "/coming-soon",
+  },
+  {
+    title: "Sports",
+    href: "/sports",
+    
+  },
+  {
     title: "Examination",
-    href: "#",
+    href: "/coming-soon",
   },
   {
     title: "Policy",
-    href: "#",
+    href: "/coming-soon",
   },
   {
     title: "IQAC",

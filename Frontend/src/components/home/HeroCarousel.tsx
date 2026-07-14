@@ -6,6 +6,11 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
+// Import your local image
+import collegeLogo from "@/assets/images/college_logo2.png";
+// or use a relative path:
+// import collegeLogo from "../../assets/images/college_logo2.png";
+
 const images = [
   "https://picsum.photos/1400/650?random=1",
   "https://picsum.photos/1400/650?random=2",
@@ -13,6 +18,7 @@ const images = [
   "https://picsum.photos/1400/650?random=4",
   "https://picsum.photos/1400/650?random=5",
   "https://picsum.photos/1400/650?random=6",
+  collegeLogo,
 ];
 
 function HeroCarousel() {
@@ -35,7 +41,7 @@ function HeroCarousel() {
         pagination={{
           clickable: true,
         }}
-       className="h-[180px] sm:h-[220px] md:h-[280px] lg:h-[350px] xl:h-[400px]"
+        className="h-[180px] sm:h-[220px] md:h-[280px] lg:h-[350px] xl:h-[400px]"
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
