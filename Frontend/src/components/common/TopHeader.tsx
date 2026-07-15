@@ -34,7 +34,8 @@ function TopHeader() {
       <div className="mx-auto flex h-14 max-w-[1350px] items-center justify-between whitespace-nowrap px-4">
         {/* Left */}
         <h1 className="select-none font-serif text-xl font-bold text-[#5c67d8]">
-          उच्च शिक्षा उत्कृष्टता संस्थान, भोपाल
+          
+        माता जीजाबाई  स्वायत्त पीजी गर्ल्स कॉलेज, इंदौर
         </h1>
 
         {/* Right */}
