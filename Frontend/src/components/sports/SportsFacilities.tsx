@@ -4,7 +4,7 @@ import {
   Volleyball,
   Goal,
   PersonStanding,
-  Bike,
+  
   Medal,
   Gamepad2,
 } from "lucide-react";

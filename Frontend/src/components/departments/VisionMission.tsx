@@ -1,4 +1,4 @@
-import { departments, type Department } from "@/data/departments";
+import {  type Department } from "@/data/departments";
 import { Eye, Target } from "lucide-react";
 
 interface VisionMissionProps {

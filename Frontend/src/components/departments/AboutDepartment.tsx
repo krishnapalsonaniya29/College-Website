@@ -1,4 +1,4 @@
-import { departments, type Department } from "@/data/departments";
+import {  type Department } from "@/data/departments";
 
 interface AboutDepartmentProps {
   department: Department;

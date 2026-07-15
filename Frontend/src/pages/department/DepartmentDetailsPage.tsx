@@ -5,7 +5,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 
 import DepartmentSidebar from "@/components/departments/DepartmentSidebar";
-import { facultyData } from "@/data/faculty";
+
 import { departments } from "@/data/departments";
 import PageBanner from "@/components/common/PageBanner";
 import FacultySection from "@/components/departments/FacultySection";
@@ -25,9 +25,7 @@ export default function DepartmentDetailsPage() {
       </div>
     );
   }
-  const departmentFaculty =
-  facultyData.find((item) => item.slug === department.slug)?.faculty || [];
-
+  
   return (
     <>
       <TopHeader />
