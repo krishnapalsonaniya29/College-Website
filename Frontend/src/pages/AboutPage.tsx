@@ -1,46 +1,93 @@
+import { useEffect, useState } from "react";
 
 import TopHeader from "@/components/common/TopHeader";
 import MainHeader from "@/components/common/MainHeader";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-
-// About Page Components
 import PageBanner from "@/components/common/PageBanner";
+
 import AboutSidebar from "@/components/about/AboutSidebar";
-import AboutInstitute from "../components/about/AboutInstitute";
+import AboutInstitute from "@/components/about/AboutInstitute";
+
+import api from "@/lib/api";
+
+interface AboutData {
+  instituteName: string;
+
+  about: string;
+  motto: string;
+  vision: string;
+  mission: string;
+  objectives: string;
+
+  principalName: string;
+  principalPhotoUrl: string;
+  principalMessage: string;
+}
 
 const AboutPage = () => {
+  const [about, setAbout] =
+    useState<AboutData | null>(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  useEffect(() => {
+    const fetchAbout = async () => {
+      try {
+        const res = await api.get("/about");
+
+        setAbout(res.data.data);
+      } catch (err) {
+        console.error(
+          "Failed to fetch about data.",
+          err
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAbout();
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
+    <div className="flex min-h-screen flex-col bg-gray-50">
       <TopHeader />
       <MainHeader />
       <Navbar />
 
-      {/* Banner */}
-     <PageBanner
-  title="About Institute"
-  description="Learn about our institution, our history, values, academic excellence, and commitment to quality education."
-/>
+      <PageBanner
+        title="About Institute"
+        description="Learn about our institution, our history, values, academic excellence, and commitment to quality education."
+      />
 
-      {/* Main Content */}
       <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 py-10 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Left Sidebar */}
-            <aside className="lg:col-span-1">
-              <AboutSidebar />
-            </aside>
+        <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+          {loading ? (
+            <div className="py-20 text-center text-gray-500">
+              Loading...
+            </div>
+          ) : !about ? (
+            <div className="py-20 text-center text-gray-500">
+              Failed to load institute information.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+              <aside className="lg:col-span-1">
+                <AboutSidebar />
+              </aside>
 
-            {/* Right Content */}
-            <section className="lg:col-span-3">
-              <AboutInstitute />
-            </section>
-          </div>
+              <section className="lg:col-span-3">
+                <AboutInstitute
+                  data={about}
+                />
+              </section>
+            </div>
+          )}
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

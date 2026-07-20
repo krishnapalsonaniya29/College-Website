@@ -2,20 +2,48 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 const links = [
-  "Seminar/Webinar",
-  "ePay Dashboard",
-  "MoU",
-  "Swayam NPTEL",
-  "Alumni Association",
-  "Admission",
-  "Online Quiz Test",
-  "Scholarship",
-  "Tender",
-  "Internship Program",
-  "Vocational Courses Cell",
-  "NEP Vocational",
-  "NIRF",
-  "Institutional Club",
+  {
+    title: "E-Pravesh",
+    url: "https://epravesh.highereducation.mp.gov.in/",
+  },
+  {
+    title: "Higher Education",
+    url: "https://highereducation.mp.gov.in/",
+  },
+  {
+    title: "Swayam NPTEL",
+    url: "#",
+  },
+  {
+    title: "Alumni Association",
+    url: "#",
+  },
+  {
+    title: "Admission",
+    url: "#",
+  },
+  {
+    title: "DAVV",
+    url: "https://www.dauniv.ac.in/",
+  },
+  {
+    title: "UGC",
+    url: "https://www.ugc.gov.in/",
+  },
+  {
+    title: "MP Online",
+    url: "https://mponlinelimited.com/",
+  },
+ 
+  
+  {
+    title: "NIRF",
+    url: "https://www.nirfindia.org/",
+  },
+  {
+    title: "Institutional Club",
+    url: "/coming-soon",
+  },
 ];
 
 function UsefulLinks() {
@@ -37,12 +65,14 @@ function UsefulLinks() {
       {/* Links */}
       <div className="grid grid-cols-2 gap-5 p-6">
         {links.map((link) => (
-          <a
-            key={link}
-            href="#"
+        <a
+          key={link.title}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
             className="group flex items-center justify-center gap-2 rounded-full bg-[#12388f] px-5 py-3 text-center font-medium text-white shadow transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-lg"
           >
-            <span>{link}</span>
+            <span>{link.title}</span>
 
             <ExternalLink
               size={16}

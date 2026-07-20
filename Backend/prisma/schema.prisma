@@ -1,0 +1,534 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//////////////////////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////////////////////
+
+enum ProgramCategory {
+  UG
+  PG
+  DIPLOMA
+  CERTIFICATE
+}
+
+enum Semester {
+  SEM1
+  SEM2
+  SEM3
+  SEM4
+  SEM5
+  SEM6
+  SEM7
+  SEM8
+}
+
+enum GalleryCategory {
+  CAMPUS
+  SPORTS
+  EVENT
+  CULTURAL
+  DEPARTMENT
+  LABORATORY
+  NSS
+  NCC
+}
+
+enum NewsCategory {
+  NEWS
+  NOTICE
+  CIRCULAR
+  EVENT
+  ACHIEVEMENT
+  EXAM
+  ADMISSION
+  TENDER
+  SCHOLARSHIP
+}
+
+//////////////////////////////////////////////////////////
+// ADMIN
+//////////////////////////////////////////////////////////
+
+model Admin {
+  id Int @id @default(autoincrement())
+
+  name     String
+  email    String @unique
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////////
+// HOME CONFIG
+//////////////////////////////////////////////////////////
+
+model HomeConfig {
+  id Int @id @default(autoincrement())
+
+  directorName          String
+  directorPhotoUrl      String
+  directorPhotoPublicId String?
+  directorMessage       String  @db.Text
+
+  totalStudents Int
+  ugStudents    Int
+  pgStudents    Int
+  girls         Int
+  boys          Int
+
+  academicSession String
+
+  thought       String @db.Text
+  thoughtAuthor String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////////
+// ABOUT
+//////////////////////////////////////////////////////////
+model About {
+  id Int @id @default(autoincrement())
+
+  instituteName String
+
+  about      String @db.Text
+  motto      String @db.Text
+  vision     String @db.Text
+  mission    String @db.Text
+  objectives String @db.Text
+
+  principalName          String
+  principalPhotoUrl      String
+  principalPhotoPublicId String?
+  principalMessage       String  @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////////
+// HERO SLIDES
+//////////////////////////////////////////////////////////
+
+model HeroSlide {
+  id            Int     @id @default(autoincrement())
+  title         String
+  subtitle      String
+  imageUrl      String
+  imagePublicId String
+  buttonText    String?
+  buttonLink    String?
+  displayOrder  Int
+  isActive      Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////////
+// DEPARTMENT
+//////////////////////////////////////////////////////////
+
+model Department {
+  id Int @id @default(autoincrement())
+
+  name String
+  slug String @unique
+
+  logoUrl      String
+  logoPublicId String
+
+  description String @db.Text
+
+  vision  String @db.Text
+  mission String @db.Text
+
+  isActive Boolean @default(true)
+
+  faculty Faculty[]
+  gallery Gallery[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// FACULTY
+//////////////////////////////////////////////////////////
+
+model Faculty {
+  id Int @id @default(autoincrement())
+
+  departmentId Int
+
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+
+  name String
+
+  designation String
+
+  qualification String
+
+  experience Int
+
+  photoUrl      String
+  photoPublicId String
+
+  email String @unique
+
+  isHOD Boolean @default(false)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([departmentId])
+  @@index([isHOD])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// PROGRAM
+//////////////////////////////////////////////////////////
+
+model Program {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  category ProgramCategory
+
+  isActive Boolean @default(true)
+
+  subjects Subject[]
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// SUBJECT
+//////////////////////////////////////////////////////////
+
+model Subject {
+  id Int @id @default(autoincrement())
+
+  programId Int
+
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  subjectCode String
+
+  subjectName String
+
+  isActive Boolean @default(true)
+
+  syllabus Syllabus[]
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([programId])
+  @@index([subjectCode])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// SYLLABUS
+//////////////////////////////////////////////////////////
+model Syllabus {
+  id Int @id @default(autoincrement())
+
+  subjectId Int
+
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  semester Semester
+
+  pdfUrl      String
+  pdfPublicId String
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([subjectId, semester])
+  @@index([subjectId])
+  @@index([semester])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// NEWS
+//////////////////////////////////////////////////////////
+
+model News {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  description String @db.Text
+
+  category NewsCategory @default(NEWS)
+
+  imageUrl      String?
+  imagePublicId String?
+
+  pdfUrl      String?
+  pdfPublicId String?
+
+  publishedAt DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@index([publishedAt])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// EVENT
+//////////////////////////////////////////////////////////
+
+model Event {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  description String @db.Text
+
+  imageUrl      String?
+  imagePublicId String?
+
+  pdfUrl      String?
+  pdfPublicId String?
+
+  eventDate DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([eventDate])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// NOTICE
+//////////////////////////////////////////////////////////
+
+model Notice {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  description String @db.Text
+
+  noticeDate DateTime
+
+  pdfUrl      String?
+  pdfPublicId String?
+
+  isPinned Boolean @default(false)
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////////////////////
+// ADMISSION
+//////////////////////////////////////////////////////////
+
+model Admission {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  admissionDate DateTime
+
+  pdfUrl      String
+  pdfPublicId String
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([admissionDate])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// GALLERY
+//////////////////////////////////////////////////////////
+
+model Gallery {
+  id Int @id @default(autoincrement())
+
+  departmentId Int?
+
+  department Department? @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+
+  title String
+
+  imageUrl      String
+  imagePublicId String
+
+  category GalleryCategory
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([departmentId])
+  @@index([category])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// ALUMNI
+//////////////////////////////////////////////////////////
+
+model Alumni {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  batch Int
+
+  course String
+
+  profession String
+
+  company String?
+
+  message String @db.Text
+
+  photoUrl      String
+  photoPublicId String
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([batch])
+  @@index([course])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// SPORTS ACHIEVEMENTS
+//////////////////////////////////////////////////////////
+model SportsAchievement {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  description String @db.Text
+
+  achievementDate DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([achievementDate])
+  @@index([isActive])
+}
+
+
+//////////////////////////////////////////////////////////
+// STUDENT ACHIEVEMENTS
+//////////////////////////////////////////////////////////
+
+model StudentAchievement {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  email String?
+
+  course String
+
+  photoUrl      String
+  photoPublicId String
+
+  achievement String
+
+  description String @db.Text
+
+  achievementDate DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([course])
+  @@index([achievementDate])
+  @@index([isActive])
+}
+
+//////////////////////////////////////////////////////////
+// FACULTY ACHIEVEMENTS
+//////////////////////////////////////////////////////////
+model FacultyAchievement {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  email String?
+
+  subject String
+
+  photoUrl String
+  photoPublicId String
+
+  achievement String
+
+  description String @db.Text
+
+  achievementDate DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([subject])
+  @@index([achievementDate])
+  @@index([isActive])
+}

@@ -1,40 +1,71 @@
 import { motion } from "framer-motion";
-import { Award, Mail, GraduationCap } from "lucide-react";
+import {
+  Library,
+  MonitorSmartphone,
+  FlaskConical,
+  Dumbbell,
+  ShieldCheck,
+  Trees,
+  ArrowRight,
+} from "lucide-react";
 
-const faculty = [
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
+
+const facilities = [
   {
-    name: "Dr. Rajesh Sharma",
-    position: "Professor",
-    department: "Computer Science",
-    email: "rajesh@iehe.ac.in",
-    achievementType: "Research Award",
-    achievement: "Received Best Research Paper Award at IEEE ICCIT 2026.",
-    date: "10 Jul 2026",
-    image: "https://i.pravatar.cc/300?img=12",
+    title: "Central Library",
+    description:
+      "A well-stocked library with thousands of books, journals and digital learning resources.",
+    image:
+      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=1200&q=80",
+    icon: Library,
   },
   {
-    name: "Dr. Priya Verma",
-    position: "Associate Professor",
-    department: "Physics",
-    email: "priya@iehe.ac.in",
-    achievementType: "Patent",
-    achievement: "Granted Patent for Smart Solar Energy Monitoring System.",
-    date: "03 Jul 2026",
-    image: "https://i.pravatar.cc/300?img=32",
+    title: "Smart Classrooms",
+    description:
+      "Technology-enabled classrooms with projectors and interactive teaching methods.",
+    image:
+      "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&q=80",
+    icon: MonitorSmartphone,
   },
   {
-    name: "Dr. Amit Gupta",
-    position: "Assistant Professor",
-    department: "Mathematics",
-    email: "amit@iehe.ac.in",
-    achievementType: "Publication",
-    achievement: "Published in Elsevier Journal with high impact factor.",
-    date: "28 Jun 2026",
-    image: "https://i.pravatar.cc/300?img=45",
+    title: "Science Laboratories",
+    description:
+      "Modern Physics, Chemistry, Botany and Zoology laboratories for practical learning.",
+    image:
+      "https://images.unsplash.com/photo-1532187643603-ba119ca4109e?w=1200&q=80",
+    icon: FlaskConical,
+  },
+  {
+    title: "Sports Facilities",
+    description:
+      "Indoor and outdoor sports facilities promoting physical fitness and teamwork.",
+    image:
+      "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&q=80",
+    icon: Dumbbell,
+  },
+  {
+    title: "Safe Campus",
+    description:
+      "24×7 security, CCTV surveillance and a safe, supportive environment for women students.",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Green Campus",
+    description:
+      "Beautiful gardens, open spaces and an eco-friendly environment that inspires learning.",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?w=1200&q=80",
+    icon: Trees,
   },
 ];
 
-function FacultyAchievements() {
+function CampusFacilities() {
   return (
     <motion.section
       initial={{ opacity: 0, x: 25 }}
@@ -46,85 +77,83 @@ function FacultyAchievements() {
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-5 py-3">
         <h2 className="text-lg font-semibold text-white">
-          Faculty Achievements
+          Campus Facilities
         </h2>
+
+        <p className="mt-1 text-sm text-blue-100">
+          Modern infrastructure for academic excellence and holistic development.
+        </p>
       </div>
 
-      {/* Horizontal Slider */}
-      <div className="overflow-hidden py-5">
-        <motion.div
-          className="flex gap-5"
-          animate={{
-            x: ["0%", "-50%"],
+      <div className="p-5">
+        <Swiper
+          modules={[Autoplay]}
+          loop
+          grabCursor
+          spaceBetween={20}
+          autoplay={{
+            delay: 2800,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
           }}
         >
-          {[...faculty, ...faculty].map((item, index) => (
-            <div
-              key={index}
-              className="w-[300px] shrink-0 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              {/* Faculty */}
-              <div className="flex items-center gap-3">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-16 w-16 rounded-full border-2 border-blue-600 object-cover"
-                />
+          {facilities.map((facility) => {
+            const Icon = facility.icon;
 
-                <div>
-                  <h3 className="font-semibold text-gray-800">
-                    {item.name}
-                  </h3>
+            return (
+              <SwiperSlide key={facility.title}>
+                <motion.div
+                  whileHover={{
+                    y: -6,
+                  }}
+                  className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+                >
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={facility.image}
+                      alt={facility.title}
+                      className="h-full w-full object-cover transition duration-500 hover:scale-110"
+                    />
 
-                  <p className="text-sm text-blue-700">
-                    {item.position}
-                  </p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-                  <p className="text-xs text-gray-500">
-                    {item.department}
-                  </p>
-                </div>
-              </div>
+                    <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-lg">
+                      <Icon className="h-5 w-5 text-blue-700" />
+                    </div>
 
-              {/* Email */}
-              <div className="mt-4 flex items-center gap-2 text-xs text-gray-600">
-                <Mail size={14} />
-                {item.email}
-              </div>
+                    <h3 className="absolute bottom-4 left-4 right-4 text-lg font-bold text-white">
+                      {facility.title}
+                    </h3>
+                  </div>
 
-              {/* Achievement Type */}
-              <div className="mt-4 flex items-center gap-2">
-                <Award size={16} className="text-yellow-500" />
-                <span className="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-700">
-                  {item.achievementType}
-                </span>
-              </div>
+                  {/* Content */}
+                  <div className="p-5">
+                    <p className="line-clamp-3 text-sm leading-6 text-gray-600">
+                      {facility.description}
+                    </p>
 
-              {/* Achievement */}
-              <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-700">
-                {item.achievement}
-              </p>
-
-              {/* Footer */}
-              <div className="mt-4 flex items-center justify-between border-t pt-3 text-xs text-gray-500">
-                <span className="flex items-center gap-1">
-                  <GraduationCap size={14} />
-                  IEHE
-                </span>
-
-                <span>{item.date}</span>
-              </div>
-            </div>
-          ))}
-        </motion.div>
+                   
+                  </div>
+                </motion.div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     </motion.section>
   );
 }
 
-export default FacultyAchievements;
+export default CampusFacilities;

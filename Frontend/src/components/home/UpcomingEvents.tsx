@@ -1,40 +1,36 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { CalendarDays, MapPin } from "lucide-react";
+import { CalendarDays } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const events = [
-  {
-    title: "National Seminar on Artificial Intelligence",
-    date: "15 Jul 2026",
-    venue: "Seminar Hall",
-  },
-  {
-    title: "Hackathon 2026",
-    date: "22 Jul 2026",
-    venue: "Computer Department",
-  },
-  {
-    title: "Faculty Development Programme",
-    date: "28 Jul 2026",
-    venue: "Conference Hall",
-  },
-  {
-    title: "Research Paper Presentation",
-    date: "05 Aug 2026",
-    venue: "Auditorium",
-  },
-  {
-    title: "Startup & Innovation Summit",
-    date: "12 Aug 2026",
-    venue: "Innovation Center",
-  },
-  {
-    title: "Career Guidance Workshop",
-    date: "20 Aug 2026",
-    venue: "Seminar Hall",
-  },
-];
+import api from "@/lib/api";
+
+interface Event {
+  id: number;
+  title: string;
+  eventDate: string;
+}
 
 function UpcomingEvents() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await api.get("/events");
+
+        setEvents(res.data.data.slice(0, 6));
+      } catch (err) {
+        console.error("Failed to fetch events.", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   return (
     <motion.section
       initial={{ opacity: 0, x: -25 }}
@@ -49,53 +45,66 @@ function UpcomingEvents() {
           Upcoming Events
         </h2>
 
-        <button className="rounded-md bg-orange-500 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-orange-600">
-          Concluded Events
-        </button>
+        <Link
+          to="/events"
+          className="rounded-md bg-orange-500 px-4 py-1.5 text-sm font-medium text-white transition hover:bg-orange-600"
+        >
+          All Events
+        </Link>
       </div>
 
       {/* Events */}
       <div className="relative h-[340px] overflow-hidden">
-        <motion.div
-          animate={{ y: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            duration: 18,
-            ease: "linear",
-          }}
-        >
-          {[...events, ...events].map((event, index) => (
-            <a
-              key={index}
-              href="#"
-              className="mx-4 my-2 flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 p-3 transition-all hover:border-blue-300 hover:bg-blue-50"
-            >
-              <div className="min-w-0">
-                <h3 className="truncate text-sm font-semibold text-gray-800">
-                  {event.title}
-                </h3>
+        {loading ? (
+          <div className="flex h-full items-center justify-center text-gray-500">
+            Loading events...
+          </div>
+        ) : events.length === 0 ? (
+          <div className="flex h-full items-center justify-center text-gray-500">
+            No events available.
+          </div>
+        ) : (
+          <motion.div
+            animate={{ y: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              duration: 18,
+              ease: "linear",
+            }}
+          >
+            {[...events, ...events].map((event, index) => (
+              <Link
+                key={`${event.id}-${index}`}
+                to="/events"
+                className="mx-4 my-2 flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 p-3 transition-all hover:border-blue-300 hover:bg-blue-50"
+              >
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-semibold text-gray-800">
+                    {event.title}
+                  </h3>
 
-                <div className="mt-1 flex items-center gap-4 text-xs text-gray-500">
-                  <span className="flex items-center gap-1">
+                  <div className="mt-1 flex items-center gap-2 text-xs text-gray-500">
                     <CalendarDays size={13} />
-                    {event.date}
-                  </span>
 
-                  <span className="flex items-center gap-1">
-                    <MapPin size={13} />
-                    {event.venue}
-                  </span>
+                    {new Date(
+                      event.eventDate
+                    ).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              <div className="ml-4 rounded-md bg-blue-100 px-3 py-2 text-center">
-                <p className="text-xs font-semibold uppercase text-blue-700">
-                  Event
-                </p>
-              </div>
-            </a>
-          ))}
-        </motion.div>
+                <div className="ml-4 rounded-md bg-blue-100 px-3 py-2 text-center">
+                  <p className="text-xs font-semibold uppercase text-blue-700">
+                    Event
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </motion.div>
+        )}
       </div>
     </motion.section>
   );

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
 
 import TopHeader from "@/components/common/TopHeader";
 import MainHeader from "@/components/common/MainHeader";
@@ -9,8 +10,33 @@ import PageBanner from "@/components/common/PageBanner";
 import ProgramsSidebar from "@/components/programs/ProgramsSidebar";
 import ProgramsContent from "@/components/programs/ProgramsContent";
 
-const ProgramsPage = () => {
-  const [selected, setSelected] = useState<"all" | "ug" | "pg">("all");
+import type { Program } from "@/types/program";
+export default function ProgramsPage() {
+  const [programs, setPrograms] = useState<Program[]>([]);
+  const [selectedCategory, setSelectedCategory] =
+    useState("ALL");
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        const res = await api.get("/programs");
+
+        setPrograms(
+          res.data.data.filter(
+            (p: Program) => p.isActive
+          )
+        );
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrograms();
+  }, []);
 
   return (
     <>
@@ -19,34 +45,26 @@ const ProgramsPage = () => {
       <Navbar />
 
       <PageBanner
-        title="Programs"
-        description="Explore Undergraduate and Postgraduate Programs offered by the Institute."
+        title="Programs & Courses"
+        description="Explore all academic programs offered by the institute."
       />
 
-      <section className="bg-slate-50 py-12">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-            
-            {/* Sidebar */}
-            <aside className="lg:col-span-1">
-              <ProgramsSidebar
-                selected={selected}
-                onSelect={setSelected}
-              />
-            </aside>
+      <section className="container mx-auto grid gap-8 px-4 py-12 lg:grid-cols-4">
+        <ProgramsSidebar
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
 
-            {/* Content */}
-            <main className="lg:col-span-3">
-              <ProgramsContent selected={selected} />
-            </main>
-
-          </div>
+        <div className="lg:col-span-3">
+          <ProgramsContent
+            loading={loading}
+            programs={programs}
+            selectedCategory={selectedCategory}
+          />
         </div>
       </section>
 
       <Footer />
     </>
   );
-};
-
-export default ProgramsPage;
+}

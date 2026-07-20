@@ -1,17 +1,41 @@
+import { useEffect, useState } from "react";
 import { Home, ChevronRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-import { departments } from "@/data/departments";
+import api from "@/lib/api";
+
+interface Department {
+  id: number;
+  name: string;
+  slug: string;
+}
 
 export default function DepartmentSidebar() {
+  const [departments, setDepartments] = useState<Department[]>([]);
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const res = await api.get("/departments");
+        setDepartments(res.data.data);
+      } catch (err) {
+        console.error("Failed to fetch departments", err);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
   return (
     <aside className="sticky top-24 w-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
       {/* Header */}
       <div className="bg-blue-900 px-6 py-4">
-        <h2 className="text-xl font-bold text-white">Departments</h2>
+        <h2 className="text-xl font-bold text-white">
+          Departments
+        </h2>
       </div>
 
-      {/* Home */}
+      {/* All Departments */}
       <div className="p-4">
         <NavLink
           to="/departments"
@@ -25,7 +49,9 @@ export default function DepartmentSidebar() {
           }
         >
           <Home size={18} />
-          <span className="font-medium">All Departments</span>
+          <span className="font-medium">
+            All Departments
+          </span>
         </NavLink>
       </div>
 
@@ -40,7 +66,7 @@ export default function DepartmentSidebar() {
         <div className="space-y-1">
           {departments.map((dept) => (
             <NavLink
-              key={dept.slug}
+              key={dept.id}
               to={`/departments/${dept.slug}`}
               className={({ isActive }) =>
                 `group flex items-center justify-between rounded-lg px-4 py-3 transition-all duration-300 ${
@@ -50,14 +76,9 @@ export default function DepartmentSidebar() {
                 }`
               }
             >
-              <div>
-                <p className="text-sm font-semibold">{dept.shortName}</p>
-                <p
-                  
-                >
-                  {dept.name}
-                </p>
-              </div>
+              <span className="font-medium">
+                {dept.name}
+              </span>
 
               <ChevronRight
                 size={16}

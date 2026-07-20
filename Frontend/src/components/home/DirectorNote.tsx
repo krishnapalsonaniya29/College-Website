@@ -1,7 +1,52 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
+import api from "@/lib/api";
+
+interface HomeConfig {
+  directorName: string;
+  directorPhotoUrl: string;
+  directorMessage: string;
+}
+
 function DirectorNote() {
+  const [director, setDirector] = useState<HomeConfig | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDirector = async () => {
+      try {
+        const res = await api.get("/home");
+        setDirector(res.data.data);
+      } catch (error) {
+        console.error("Failed to load director information.", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDirector();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex h-full min-h-[320px] items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md">
+        <p className="text-gray-500">Loading director's note...</p>
+      </div>
+    );
+  }
+
+  if (!director) {
+    return (
+      <div className="flex h-full min-h-[320px] items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md">
+        <p className="text-red-500">
+          Unable to load director's information.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <motion.section
       initial={{ opacity: 0, x: -25 }}
@@ -22,8 +67,8 @@ function DirectorNote() {
         {/* Image */}
         <div className="shrink-0">
           <img
-            src="https://i.pravatar.cc/250?img=58"
-            alt="Director"
+            src={director.directorPhotoUrl}
+            alt={director.directorName}
             className="h-36 w-32 rounded-xl border-2 border-blue-200 object-cover shadow-md transition duration-300 hover:scale-105"
           />
         </div>
@@ -31,18 +76,15 @@ function DirectorNote() {
         {/* Details */}
         <div className="flex flex-1 flex-col">
           <h3 className="text-xl font-bold text-blue-900">
-            Prof. Rajesh Kumar Sharma
+            {director.directorName}
           </h3>
 
           <p className="mt-1 text-sm font-medium text-gray-600">
             Director, Institute for Excellence in Higher Education
           </p>
 
-          <p className="mt-4 text-sm leading-7 text-gray-700">
-            At IEHE, we are committed to nurturing academic excellence,
-            innovation, ethical values, and holistic development. Our
-            mission is to empower students with knowledge and skills that
-            enable them to become responsible global citizens.
+          <p className="mt-4 line-clamp-5 text-sm leading-7 text-gray-700">
+            {director.directorMessage}
           </p>
 
           <div className="mt-auto pt-5">

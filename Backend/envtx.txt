@@ -1,0 +1,17 @@
+PORT=5000
+
+DATABASE_URL="postgresql://postgres:super500@localhost:5432/collegewebsite?schema=public"
+
+JWT_SECRET=your_super_secret_key
+JWT_EXPIRES_IN=7d
+CLIENT_URL = http://localhost:5173
+# CLOUDINARY_CLOUD_NAME=dsjrzczn8
+
+# CLOUDINARY_API_KEY=993899865163434
+
+
+
+# CLOUDINARY_API_SECRET=Fc9EN4sjk7snlFqDc62UEjtNbEo
+CLOUDINARY_CLOUD_NAME=dltnhcifl
+CLOUDINARY_API_KEY=542631959793913
+CLOUDINARY_API_SECRET=toN5Ce5dN5Xg6xtQf4xUQ_rkbMY

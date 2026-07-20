@@ -5,6 +5,7 @@ import {
   FileText,
   User,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const links = [
   { icon: Phone, label: "Contact", href: "#" },
@@ -20,10 +21,12 @@ const loginOptions = [
   "Exam Service",
   "Web Admin",
   "Employee",
-  "HOD/Admin",
+  "HOD",
+  "Admin Login",
 ];
 
 function TopHeader() {
+  const navigate = useNavigate();
   return (
     <motion.header
       initial={{ opacity: 0, y: -15 }}
@@ -74,13 +77,24 @@ function TopHeader() {
           </button>
 
           {/* Login */}
-          <select className="w-36 cursor-pointer rounded-sm border border-[#42668c] bg-[#4f79a7] px-3 py-1.5 text-sm font-medium text-white outline-none transition hover:bg-[#3f6489]">
-            {loginOptions.map((option) => (
-              <option key={option} className="text-white">
-                {option}
-              </option>
-            ))}
-          </select>
+          <select
+  defaultValue="Login"
+  onChange={(e) => {
+    const value = e.target.value;
+
+    if (value === "Admin Login") {
+      navigate("/admin/login");
+      e.target.value = "Login";
+    }
+  }}
+  className="w-40 cursor-pointer rounded-sm border border-[#42668c] bg-[#4f79a7] px-3 py-1.5 text-sm font-medium text-white outline-none transition hover:bg-[#3f6489]"
+>
+  {loginOptions.map((option) => (
+    <option key={option} value={option} className="text-black">
+      {option}
+    </option>
+  ))}
+</select>
         </div>
       </div>
     </motion.header>

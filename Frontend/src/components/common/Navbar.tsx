@@ -31,8 +31,24 @@ const menuItems = [
   },
   {
     title: "Syllabus",
-    href: "/coming-soon",
+    href: "/syllabus",
   },
+  {
+    title: "News",
+    href: "/news",
+  },
+  {
+    title: "Events",
+    href: "/events",
+  },
+  // {
+  //   title: "News",
+  //   children:[
+  //     {      title: "News",      href: "/news",},
+  //     {title: "Events", href: "/events"},
+
+  //   ]
+  // },
   {
     title: "Sports",
     href: "/sports",
@@ -42,51 +58,27 @@ const menuItems = [
     title: "Examination",
     href: "/coming-soon",
   },
-  {
-    title: "Policy",
-    href: "/coming-soon",
-  },
-  {
-    title: "IQAC",
-    children: [
-      { title: "IQAC", href: "#" },
-      { title: "AQAR", href: "#" },
-      { title: "SSR", href: "#" },
-      { title: "NAAC", href: "#" },
-    ],
-  },
+  
   {
     title: "Gallery",
-    children: [
-      { title: "Media Coverage", href: "#" },
-      { title: "Old Photo Gallery", href: "#" },
-      { title: "New Photo Gallery", href: "#" },
-    ],
+    href: "/gallery",
   },
   {
-    title: "Flagship Programs",
-    children: [
-      { title: "Aarogyam", href: "#" },
-      { title: "Eklavya", href: "#" },
-      { title: "Harit Vasundhara", href: "#" },
-      { title: "Manvata", href: "#" },
-      { title: "Sewa Sankalp Samiti", href: "#" },
-      { title: "Udgam", href: "#" },
-      { title: "Udghosh", href: "#" },
-      { title: "Bhartiya Gyan Parampara Prakosth", href: "#" },
-    ],
+    title: "Alumni",
+    href: "/alumni",
   },
+  
   {
     title: "Others",
     children: [
+      
+      { title: "NCC", href: "/coming-soon" },
+      { title: "NSS", href: "/coming-soon" },
       { title: "Anti Ragging", href: "/anti-ragging" },
-      { title: "NCC", href: "#" },
-      { title: "NSS", href: "#" },
-      { title: "Newsletter", href: "#" },
-      { title: "Placement Cell", href: "#" },
-      { title: "Alumni Association", href: "#" },
-      { title: "Grievance Redressal", href: "#" },
-      { title: "Vocational Cell", href: "#" },
+      { title: "Higher Education ", href: "https://highereducation.mp.gov.in/" },
+      { title: "Student Achievement", href: "/studentachievementpage" },
+  
+      { title: "Vocational Cell", href: "/coming-soon" },
     ],
   },
 ];

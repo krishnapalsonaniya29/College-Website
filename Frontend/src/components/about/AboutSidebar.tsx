@@ -1,10 +1,9 @@
 import {
   Building2,
-  Target,
   Eye,
+  Target,
   GraduationCap,
-  BookOpen,
-  Phone,
+  Mail,
 } from "lucide-react";
 
 const menuItems = [
@@ -14,19 +13,14 @@ const menuItems = [
     href: "#about",
   },
   {
-    title: "Vision & Mission",
+    title: "Vision",
     icon: Eye,
     href: "#vision",
   },
   {
-    title: "Principal's Message",
-    icon: GraduationCap,
-    href: "#principal",
-  },
-  {
-    title: "Facilities",
-    icon: BookOpen,
-    href: "#facilities",
+    title: "Mission",
+    icon: Target,
+    href: "#mission",
   },
   {
     title: "Objectives",
@@ -34,24 +28,24 @@ const menuItems = [
     href: "#objectives",
   },
   {
-    title: "Contact",
-    icon: Phone,
-    href: "#contact",
+    title: "Principal's Message",
+    icon: GraduationCap,
+    href: "#principal",
   },
 ];
 
 const AboutSidebar = () => {
   return (
     <div className="space-y-6 lg:sticky lg:top-6">
-      {/* Navigation Card */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="bg-blue-900 px-6 py-4">
+      {/* Navigation */}
+      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-6 py-4">
           <h2 className="text-lg font-semibold text-white">
             Quick Navigation
           </h2>
         </div>
 
-        <nav className="p-2">
+        <nav className="p-3">
           {menuItems.map((item) => {
             const Icon = item.icon;
 
@@ -63,30 +57,38 @@ const AboutSidebar = () => {
               >
                 <Icon
                   size={18}
-                  className="text-blue-800 group-hover:scale-110 transition-transform"
+                  className="text-blue-800 transition-transform group-hover:scale-110"
                 />
 
-                <span className="font-medium">{item.title}</span>
+                <span className="font-medium">
+                  {item.title}
+                </span>
               </a>
             );
           })}
         </nav>
       </div>
 
-      {/* Contact Card */}
+      {/* Information Card */}
       <div className="rounded-xl bg-gradient-to-br from-blue-900 to-blue-700 p-6 text-white shadow-sm">
-        <h3 className="text-lg font-semibold mb-3">
-          Need Assistance?
+        <h3 className="text-lg font-semibold">
+          About This Institute
         </h3>
 
-        <p className="text-sm text-blue-100 leading-6">
-          Contact our admission office for information regarding courses,
-          eligibility, admissions, and campus facilities.
+        <p className="mt-3 text-sm leading-6 text-blue-100">
+          Explore the institute's vision, mission,
+          objectives, and the Principal's message to
+          understand our commitment to quality
+          education and holistic student development.
         </p>
 
-        <button className="mt-5 w-full rounded-lg bg-amber-400 py-3 font-semibold text-slate-900 transition hover:bg-amber-300">
-          Contact Us
-        </button>
+        <a
+          href="#about"
+          className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-amber-400 px-4 py-3 font-semibold text-slate-900 transition hover:bg-amber-300"
+        >
+          <Mail size={18} />
+          Explore Institute
+        </a>
       </div>
     </div>
   );

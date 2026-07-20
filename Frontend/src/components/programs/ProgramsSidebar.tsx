@@ -1,33 +1,49 @@
-import { GraduationCap, Layers, BookOpen } from "lucide-react";
+import {
+  GraduationCap,
+  Layers,
+  BookOpen,
+  School,
+  Award,
+} from "lucide-react";
 import clsx from "clsx";
 
 interface ProgramsSidebarProps {
-  selected: "all" | "ug" | "pg";
-  onSelect: (value: "all" | "ug" | "pg") => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
 }
 
 const menuItems = [
   {
-    id: "all",
+    id: "ALL",
     title: "All Programs",
     icon: Layers,
   },
   {
-    id: "ug",
+    id: "UG",
     title: "UG Programs",
     icon: GraduationCap,
   },
   {
-    id: "pg",
+    id: "PG",
     title: "PG Programs",
     icon: BookOpen,
   },
+  {
+    id: "DIPLOMA",
+    title: "Diploma Programs",
+    icon: School,
+  },
+  {
+    id: "CERTIFICATE",
+    title: "Certificate Programs",
+    icon: Award,
+  },
 ] as const;
 
-const ProgramsSidebar = ({
-  selected,
-  onSelect,
-}: ProgramsSidebarProps) => {
+export default function ProgramsSidebar({
+  selectedCategory,
+  setSelectedCategory,
+}: ProgramsSidebarProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       {/* Header */}
@@ -35,6 +51,7 @@ const ProgramsSidebar = ({
         <h2 className="text-xl font-bold text-white">
           Programs
         </h2>
+
         <p className="mt-1 text-sm text-blue-100">
           Browse academic programs offered by the institute.
         </p>
@@ -48,10 +65,12 @@ const ProgramsSidebar = ({
           return (
             <button
               key={item.id}
-              onClick={() => onSelect(item.id)}
+              onClick={() =>
+                setSelectedCategory(item.id)
+              }
               className={clsx(
                 "mb-2 flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-all duration-200",
-                selected === item.id
+                selectedCategory === item.id
                   ? "bg-blue-900 text-white shadow-md"
                   : "text-slate-700 hover:bg-blue-50 hover:text-blue-900"
               )}
@@ -67,6 +86,4 @@ const ProgramsSidebar = ({
       </div>
     </div>
   );
-};
-
-export default ProgramsSidebar;
+}
